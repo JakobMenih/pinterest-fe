@@ -1,7 +1,5 @@
-// src/pages/HomePage.tsx
 import React, { useEffect, useState } from 'react';
-import api from '../api/axios';
-import { Link } from 'react-router-dom';
+import api from '../api/axios.js';
 
 type Pin = {
     id: number;
@@ -13,7 +11,7 @@ const HomePage: React.FC = () => {
     const [pins, setPins] = useState<Pin[]>([]);
 
     useEffect(() => {
-        api.get('/pins')
+        api.get<Pin[]>('/pins')
             .then((res) => {
                 setPins(res.data);
             })

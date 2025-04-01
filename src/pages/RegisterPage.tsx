@@ -1,7 +1,6 @@
-// src/pages/RegisterPage.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api/axios';
+import api from '../api/axios.js';
 
 const RegisterPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -45,7 +44,7 @@ const RegisterPage: React.FC = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button className="btn btn-success">Register</button>
+                <button type="submit" className="btn btn-success">Register</button>
             </form>
         </div>
     );

@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import jwtDecode from 'jwt-decode';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import jwtDecode from "jwt-decode";
 
 interface User {
     email: string;
@@ -14,7 +14,7 @@ const AuthContext = createContext<AuthContextType>({ user: null, logout: () => {
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }): React.ReactElement => {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
@@ -37,7 +37,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         window.location.href = '/';
     };
 
-    return <AuthContext.Provider value={{ user, logout }}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={{ user, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 export default AuthContext;

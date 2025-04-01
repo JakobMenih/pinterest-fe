@@ -1,6 +1,5 @@
-// src/pages/UploadPage.tsx
 import React, { useState } from 'react';
-import api from '../api/axios';
+import api from '../api/axios.js';
 
 const UploadPage: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -22,7 +21,7 @@ const UploadPage: React.FC = () => {
         formData.append('file', file);
         formData.append('title', title);
         try {
-            const res = await api.post('/uploads', formData, {
+            await api.post('/uploads', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

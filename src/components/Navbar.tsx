@@ -1,4 +1,3 @@
-// src/components/Navbar.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -9,7 +8,7 @@ const Navbar: React.FC = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
             <div className="container-fluid">
-                <Link to="/" className="navbar-brand">📌 Pinterest Clone</Link>
+                <Link to="/" className="navbar-brand">📌 Pinterest</Link>
                 <button
                     className="navbar-toggler"
                     type="button"

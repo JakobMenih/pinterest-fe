@@ -1,35 +1,66 @@
+// AuthContext.tsx
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
+
+interface DecodedToken {
+    id: number;
+    email: string;
+    username: string;
+}
 
 interface User {
+    id: number;
     email: string;
+    username: string;
 }
+
+
 
 interface AuthContextType {
     user: User | null;
     logout: () => void;
+    login: (token: string) => void;
 }
 
-const AuthContext = createContext<AuthContextType>({ user: null, logout: () => {} });
+const AuthContext = createContext<AuthContextType>({
+    user: null,
+    logout: () => {},
+    login: () => {},
+});
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider = ({ children }: { children: ReactNode }): React.ReactElement => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        console.log('Token from localStorage:', token);
         if (token) {
-            try {
-                const decoded = jwtDecode<{ email: string }>(token);
-                console.log('Decoded token:', decoded);
-                setUser({ email: decoded.email });
-            } catch (err) {
-                console.error('Invalid token', err);
-            }
+            decodeAndSetUser(token);
         }
     }, []);
+
+    const decodeAndSetUser = (token: string) => {
+        try {
+            const decoded = jwtDecode<DecodedToken>(token);
+            setUser({
+                id: decoded.id,
+                email: decoded.email,
+                username: decoded.username,
+            });
+
+
+
+        } catch (err) {
+            console.error('Invalid token', err);
+            setUser(null);
+        }
+    };
+
+    const login = (token: string) => {
+        localStorage.setItem('token', token);
+        decodeAndSetUser(token);
+    };
 
     const logout = () => {
         localStorage.removeItem('token');
@@ -38,7 +69,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }): React.React
     };
 
     return (
-        <AuthContext.Provider value={{ user, logout }}>
+        <AuthContext.Provider value={{ user, logout, login }}>
             {children}
         </AuthContext.Provider>
     );

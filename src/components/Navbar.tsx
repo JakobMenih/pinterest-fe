@@ -1,3 +1,4 @@
+// Navbar.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -18,7 +19,7 @@ const Navbar: React.FC = () => {
                     aria-expanded="false"
                     aria-label="Toggle navigation"
                 >
-                    <span className="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon" />
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav me-auto">
@@ -29,19 +30,29 @@ const Navbar: React.FC = () => {
                             <Link to="/pins" className="nav-link">Pins</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/uploads" className="nav-link">Uploads</Link>
-                        </li>
+                        <Link to="/uploads" className="nav-link">Uploads</Link>
+                    </li>
                         {user && (
-                            <li className="nav-item">
-                                <Link to="/upload" className="nav-link">Upload</Link>
-                            </li>
+                            <>
+                                <li className="nav-item">
+                                    <Link to="/pins/create" className="nav-link">Create Pin</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to="/uploads/create" className="nav-link">Create Upload</Link>
+                                </li>
+                            </>
                         )}
+
                     </ul>
                     <div className="d-flex align-items-center">
                         {user ? (
                             <>
-                                <span className="me-3 text-muted">Logged in as: {user.email}</span>
-                                <button className="btn btn-outline-danger btn-sm" onClick={logout}>
+                                <Link to="/profile" className="btn btn-outline-secondary me-3">
+                                    Profile
+                                </Link>
+                                <span className="me-3 text-muted">Logged in as: {user.username}</span>
+
+                                <button className="btn btn-outline-danger" onClick={logout}>
                                     Logout
                                 </button>
                             </>

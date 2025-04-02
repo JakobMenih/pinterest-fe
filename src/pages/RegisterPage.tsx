@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api/axios.js';
+import api from '../api/axios';
 
 const RegisterPage: React.FC = () => {
     const [email, setEmail] = useState('');
